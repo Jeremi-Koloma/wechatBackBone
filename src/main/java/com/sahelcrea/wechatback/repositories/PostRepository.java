@@ -3,10 +3,12 @@ package com.sahelcrea.wechatback.repositories;
 import com.sahelcrea.wechatback.models.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 // Cette classe va étendre de JpaRepository
+@Repository // Annotation bean
 public interface PostRepository extends JpaRepository<Posts, Long> {
 
     // une methode pour avoir la liste des utilisateurs à ordre recent
