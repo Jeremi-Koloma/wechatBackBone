@@ -2,6 +2,7 @@ package com.sahelcrea.wechatback.services;
 
 import com.sahelcrea.wechatback.models.AppRole;
 import com.sahelcrea.wechatback.models.AppUser;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,8 +23,17 @@ public interface AccountService {
     public List<AppUser> userList();
 
 
+    // une méthode qui permet d'ajouter des nouveaux rôles dans la base de donnée
+    public AppRole addNewRole (AppRole appRole);
+
+
+    // Une méthode  qui permet d'affecter un rôle à un utilisateur
+    public void addRoleToUser(String username, String roleName);
+
+
     // une méthode pour retrouver le role d'un utilisateur
-    public AppRole findUserRoleByName(String role);
+    public AppRole findUserRoleByName(String name);
+
 
 
     // une méthode pour enregister le role
@@ -35,15 +45,25 @@ public interface AccountService {
 
 
     // une méthode pour avoir un utilisateur par son id
-    public AppUser findById(AppUser appUser);
+    public AppUser findUserById(Long id);
 
 
     // une méthode pour supprimer un utilisateur
-    public void deleteUser(AppUser appUser);
+    String supprimer(Long idUser);
+
+
+    // Une méthode pour Changer le mots de passe d'un utilisateur
+    public void updateUserPassword(AppUser appUser);
+
 
 
     // une méthode pour le mots de passe oublier
     public  void  ressetPassword(AppUser appUser);
+
+
+    // une méthode pour mèttre une photo de profil à jour
+    public String saveUserImage(MultipartFile multipartFile, Long userImageId);
+
 
 
     // une méthode pour retrouver la liste des utilisateur par son username lors de recherche

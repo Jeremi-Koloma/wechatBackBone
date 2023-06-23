@@ -18,7 +18,7 @@ public class AppRole {
     @Id // une annotation JPA pour identifier notre id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotation JPA pour identifier notre PK
     @Column(updatable = false, nullable = false)
-    private Long id;
+    private Long roleId;
 
     private String name;
 

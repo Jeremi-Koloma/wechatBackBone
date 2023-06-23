@@ -39,7 +39,33 @@ public class EmailConstructor {
                 MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
                 email.setPriority(1);
                 email.setTo(user.getEmail()); // envoie au mail de l'utilisateur
-                email.setSubject("Bienvenue sur Wechat");
+                email.setSubject("Welcome | Wechat");
+                email.setText(text, true);
+                email.setFrom(new InternetAddress(environment.getProperty("support.email")));
+            }
+        };
+        return messagePreparator;
+    }
+
+
+
+
+    // Méthode pour envoyé un mail à l'utilisateur quand il oublie son mots de passe
+    public MimeMessagePreparator constructRessetPasswordEmail(AppUser user, String password){
+        // Content de thymeleaf pour lier notre AppUser au variable context de thymeleaf
+        Context context = new Context();
+        context.setVariable("user", user);
+        context.setVariable("password", password);
+        String text = templateEngine.process("ressetPasswordTemplate",context);
+
+        // Envoie de l'email
+        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper email = new MimeMessageHelper(mimeMessage);
+                email.setPriority(1);
+                email.setTo(user.getEmail()); // envoie au mail de l'utilisateur
+                email.setSubject("RessetPassword | Wechat");
                 email.setText(text, true);
                 email.setFrom(new InternetAddress(environment.getProperty("support.email")));
             }
