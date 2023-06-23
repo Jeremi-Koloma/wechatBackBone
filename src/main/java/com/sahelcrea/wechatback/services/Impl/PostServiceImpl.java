@@ -27,7 +27,7 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     // Injections des dépendances
     @Autowired
-    public PostRepository postRepository;
+    private PostRepository postRepository;
 
 
 

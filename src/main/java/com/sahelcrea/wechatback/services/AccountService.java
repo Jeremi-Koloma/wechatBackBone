@@ -58,7 +58,7 @@ public interface AccountService {
 
 
     // une méthode pour le mots de passe oublier
-    public  void  ressetPassword(AppUser appUser);
+    public void ressetPassword(AppUser appUser);
 
 
     // une méthode pour mèttre une photo de profil à jour

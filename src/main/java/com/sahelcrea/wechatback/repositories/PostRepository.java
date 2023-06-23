@@ -2,6 +2,7 @@ package com.sahelcrea.wechatback.repositories;
 
 import com.sahelcrea.wechatback.models.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +24,6 @@ public interface PostRepository extends JpaRepository<Posts, Long> {
     public Posts findPostsById(@Param("x") Long postid);
 
 
+    @Modifying
     public void deletePostsById(@Param("x") Long postid);
 }

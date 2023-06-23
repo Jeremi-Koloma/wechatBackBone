@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +16,10 @@ import java.util.Set;
 @Getter // Génération des Getters
 @Setter // Génération des Setters
 @Entity // Annotation JPA pour dire que cette classe sera une table dans la base de donnée
-public class AppRole {
+public class AppRole implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 10800989087L;
+
     @Id // une annotation JPA pour identifier notre id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotation JPA pour identifier notre PK
     @Column(updatable = false, nullable = false)

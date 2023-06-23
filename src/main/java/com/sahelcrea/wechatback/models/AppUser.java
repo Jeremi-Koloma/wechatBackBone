@@ -1,13 +1,18 @@
 package com.sahelcrea.wechatback.models;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity // Annotation JPA pour dire que cette classe sera une table dans la BD
-public class AppUser {
+public class AppUser implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 164669782975869L;
+
     @Id // Annotation JPA pour Identifier notre primary KEY
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotation JPA notre Primary KEY
     @Column(updatable = false, nullable = false)

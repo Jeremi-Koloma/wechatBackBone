@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +16,10 @@ import java.util.List;
 @Getter // Génération des Getters
 @Setter // Génération des Setters
 @Entity // Annotation JPA pour dire que cette classe sera une table dans la base de donnée
-public class Posts {
+public class Posts implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 34546474787L;
+
     @Id // Annotation JPA pour definir notre id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotation JPA pour definir notre Primary KEY
     @Column(updatable = false, nullable = false)

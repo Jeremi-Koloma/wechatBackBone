@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     private AppUserRepository appUserRepository;
 
     @Autowired
-    private AccountService accountService;
+    AccountService accountService;
 
 
     // Injectons AppRoleRepository Pour enregister les Roles aussi nous avons besoin de son Repository

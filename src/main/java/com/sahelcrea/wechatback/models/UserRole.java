@@ -6,13 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 
 @NoArgsConstructor // Génération d'un constructeur sans paramètre
 @Getter // Génération des Getters
 @Setter // Génération des setters
 @Entity // Annotation JPA pour dire que cette classe sera une table dans la base de donnée
-public class UserRole {
+public class UserRole implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 98516951961L;
+
     @Id // Annotation JPA pour identifier notre id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Annotaion JPA Notre primary KEY
     //@Column(updatable = false, nullable = false)
