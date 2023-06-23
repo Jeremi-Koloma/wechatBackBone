@@ -28,6 +28,7 @@ public class Posts {
     private String likes;
     private Date postedDate;
     private Integer userImageId;
+    private String postImageName;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")

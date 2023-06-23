@@ -122,8 +122,8 @@ public class AppUser {
         return posts;
     }
 
-    public void setPosts(List<Posts> posts) {
-        this.posts = posts;
+    public void setPosts(Posts posts) {
+        this.posts.add(posts);
     }
 
     public List<Posts> getLikedPost() {
