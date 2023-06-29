@@ -1,14 +1,16 @@
-package com.sahelcrea.wechatback.services.Impl;
+package com.sahelcrea.wechatback.Services.Impl;
 
-import com.sahelcrea.wechatback.models.AppRole;
-import com.sahelcrea.wechatback.models.AppUser;
-import com.sahelcrea.wechatback.models.UserRole;
-import com.sahelcrea.wechatback.repositories.AppRoleRepository;
-import com.sahelcrea.wechatback.repositories.AppUserRepository;
-import com.sahelcrea.wechatback.services.AccountService;
-import com.sahelcrea.wechatback.utility.Constants;
-import com.sahelcrea.wechatback.utility.EmailConstructor;
+import com.sahelcrea.wechatback.Models.AppRole;
+import com.sahelcrea.wechatback.Models.AppUser;
+import com.sahelcrea.wechatback.Models.UserRole;
+import com.sahelcrea.wechatback.Repositories.AppRoleRepository;
+import com.sahelcrea.wechatback.Repositories.AppUserRepository;
+import com.sahelcrea.wechatback.Services.AccountService;
+import com.sahelcrea.wechatback.Utility.Constants;
+import com.sahelcrea.wechatback.Utility.EmailConstructor;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,55 +22,58 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 // Cette classe va implémenté notre interface AccountService pour bénéficier les méthodes
 @Service // Pour dire qu'il s'agit de la logique métier
 @Transactional
+//@AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
-
     // Injections des dépendance
 
-    // Injectons BCryptPasswordEncoder pour encoder le mots de passe de l'utlisateur avant dans l'enregister dans la base
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public AccountServiceImpl(AppUserRepository appUserRepository, AppRoleRepository appRoleRepository, EmailConstructor emailConstructor, JavaMailSender javaMailSender) {
+        this.appUserRepository = appUserRepository;
+        this.appRoleRepository = appRoleRepository;
+        this.emailConstructor = emailConstructor;
+        this.javaMailSender = javaMailSender;
+    }
 
+
+    // Injectons BCryptPasswordEncoder pour encoder le mots de passe de l'utlisateur avant dans l'enregister dans la base
+
+    @Autowired(required = false)
+    private  BCryptPasswordEncoder bCryptPasswordEncoder ;
 
     // Injectons AppUserRepository Pour enregister l'utilisateur nous avons besoin de son Repository
-    @Autowired
-    private AppUserRepository appUserRepository;
-
-    @Autowired
-    AccountService accountService;
+    private final AppUserRepository appUserRepository;
 
 
     // Injectons AppRoleRepository Pour enregister les Roles aussi nous avons besoin de son Repository
-    @Autowired
-    private AppRoleRepository appRoleRepository;
+    private final AppRoleRepository appRoleRepository;
 
 
     // Injectons nous avons besoin de notre Emailconstructeur pour choisir un type de mail
-    @Autowired
-    private EmailConstructor emailConstructor;
+    private final EmailConstructor emailConstructor;
 
 
     // Injectons JavaMailSender pour envoyer le mail
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
 
 
 
     @Override
-    public void saveUser(AppUser appUser) {
-        // Recupérons saisi le mots de passe de l'utilisateur
-        String userPassword = appUser.getPassword();
+    public AppUser saveUser(String firstname, String lastname, String username, String password, String email) {
         // Encodons le mots de passe
-        String encrytedPassword = bCryptPasswordEncoder.encode(userPassword);
+        String encrytedPassword = bCryptPasswordEncoder.encode(password);
+
+        AppUser appUser = new AppUser();
+
         // lions ce mots de passe
+        appUser.setFirstname(firstname);
+        appUser.setLastname(lastname);
+        appUser.setUsername(username);
+        appUser.setEmail(email);
         appUser.setPassword(encrytedPassword);
         // Vérifier si la date de création est vide, on l'ajoute une date
         if (appUser.getCreatedDate() == null){
@@ -76,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
         }
         // Affectons Role "USER" à l'utilisateur
         Set<UserRole> userRoles = new HashSet<>();
-        userRoles.add(new UserRole(appUser, accountService.findUserRoleByName("USER")));
+        userRoles.add(new UserRole(appUser, appRoleRepository.findRoleByName("USER")));
         appUser.setUserRoles(userRoles);
 
         // La photo de profil par defaut
@@ -95,6 +100,7 @@ public class AccountServiceImpl implements AccountService {
         // on l'envoie un mail après l'inscription
         javaMailSender.send(emailConstructor.constructNewUserSigninEmail(appUser, encrytedPassword));
 
+        return appUser;
     }
 
     @Override
@@ -155,15 +161,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateUser(AppUser appUser) {
-        // Recupérons le mots de passe saisi par l'utilsateur
-        String userPassword = appUser.getPassword();
-        // Cryter ce mots de passe
-        String encrytedPassword = bCryptPasswordEncoder.encode(userPassword);
-        // On prend le nouveau mots de passe
-        appUser.setPassword(encrytedPassword);
-        // on l'enregistre
+    public AppUser updateUser(AppUser appUser, HashMap<String, String> request) {
+        // Recupérons les champs
+        String firstname= request.get("firstName");
+        String lastname = request.get("lastName");
+        String email = request.get("email");
+
+        appUser.setFirstname(firstname);
+        appUser.setLastname(lastname);
+        appUser.setEmail(email);
         appUserRepository.save(appUser);
+        return appUser;
     }
 
     @Override
@@ -178,9 +186,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateUserPassword(AppUser appUser) {
-        String password = appUser.getPassword();
-        String encodePassword = bCryptPasswordEncoder.encode(password);
+    public void updateUserPassword(AppUser appUser, String newPassword) {
+        // Recupérons le mots de passe saisi
+        String encodePassword = bCryptPasswordEncoder.encode(newPassword);
         appUser.setPassword(encodePassword);
         appUserRepository.save(appUser);
     }

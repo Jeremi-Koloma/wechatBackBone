@@ -1,14 +1,15 @@
-package com.sahelcrea.wechatback.services;
+package com.sahelcrea.wechatback.Services;
 
-import com.sahelcrea.wechatback.models.AppRole;
-import com.sahelcrea.wechatback.models.AppUser;
+import com.sahelcrea.wechatback.Models.AppRole;
+import com.sahelcrea.wechatback.Models.AppUser;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface AccountService {
     // une méthode pour enregistrer un utilisateur
-    public void saveUser(AppUser appUser);
+    public AppUser saveUser(String firstname, String lastname, String username, String password, String email);
 
 
     // une méthode pour trouver un utilisateur par son username
@@ -41,7 +42,7 @@ public interface AccountService {
 
 
     // une méthode pour pouvoir modifier un utilsateur
-    public void updateUser(AppUser appUser);
+    public AppUser updateUser(AppUser appUser, HashMap<String, String> request);
 
 
     // une méthode pour avoir un utilisateur par son id
@@ -53,7 +54,7 @@ public interface AccountService {
 
 
     // Une méthode pour Changer le mots de passe d'un utilisateur
-    public void updateUserPassword(AppUser appUser);
+    public void updateUserPassword(AppUser appUser, String newPassword);
 
 
 
@@ -71,7 +72,4 @@ public interface AccountService {
 
 
     public void simpleSave(AppUser appUser);
-
-
-
 }

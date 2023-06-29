@@ -1,6 +1,6 @@
-package com.sahelcrea.wechatback.services;
+package com.sahelcrea.wechatback.Services;
 
-import com.sahelcrea.wechatback.models.Posts;
+import com.sahelcrea.wechatback.Models.Posts;
 
 public interface CommentService {
     // une méthode pour faire de commentaire

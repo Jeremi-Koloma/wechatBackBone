@@ -1,4 +1,4 @@
-package com.sahelcrea.wechatback.models;
+package com.sahelcrea.wechatback.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-
 
 @NoArgsConstructor // Génération d'un constructeur sans paramètre
 @Getter // Génération des Getters
@@ -43,5 +42,4 @@ public class UserRole implements Serializable {
         this.appUser = appUser;
         this.appRole = appRole;
     }
-
 }

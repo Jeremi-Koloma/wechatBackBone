@@ -1,13 +1,13 @@
-package com.sahelcrea.wechatback.repositories;
+package com.sahelcrea.wechatback.Repositories;
 
-import com.sahelcrea.wechatback.models.AppUser;
+import com.sahelcrea.wechatback.Models.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 // Cette classe va étendre de JpaRepository
-@Repository // Annotation bean
+@Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     public AppUser findByUsername(String username);
     public AppUser findByEmail(String email);

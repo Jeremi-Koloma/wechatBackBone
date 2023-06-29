@@ -1,9 +1,9 @@
-package com.sahelcrea.wechatback.services.Impl;
+package com.sahelcrea.wechatback.Services.Impl;
 
-import com.sahelcrea.wechatback.models.Comments;
-import com.sahelcrea.wechatback.models.Posts;
-import com.sahelcrea.wechatback.repositories.CommentRepository;
-import com.sahelcrea.wechatback.services.CommentService;
+import com.sahelcrea.wechatback.Models.Comments;
+import com.sahelcrea.wechatback.Models.Posts;
+import com.sahelcrea.wechatback.Repositories.CommentRepository;
+import com.sahelcrea.wechatback.Services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
-
     // Injections des dépendance
     @Autowired
     private CommentRepository commentRepository;

@@ -1,6 +1,6 @@
-package com.sahelcrea.wechatback.utility;
+package com.sahelcrea.wechatback.Utility;
 
-import com.sahelcrea.wechatback.models.AppUser;
+import com.sahelcrea.wechatback.Models.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.MimeMessageHelper;

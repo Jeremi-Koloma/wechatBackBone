@@ -1,10 +1,10 @@
-package com.sahelcrea.wechatback.services.Impl;
+package com.sahelcrea.wechatback.Services.Impl;
 
-import com.sahelcrea.wechatback.models.AppUser;
-import com.sahelcrea.wechatback.models.Posts;
-import com.sahelcrea.wechatback.repositories.PostRepository;
-import com.sahelcrea.wechatback.services.PostService;
-import com.sahelcrea.wechatback.utility.Constants;
+import com.sahelcrea.wechatback.Models.AppUser;
+import com.sahelcrea.wechatback.Models.Posts;
+import com.sahelcrea.wechatback.Repositories.PostRepository;
+import com.sahelcrea.wechatback.Services.PostService;
+import com.sahelcrea.wechatback.Utility.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,10 +62,10 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostsById(id);
     }
 
-    @Override
+   /* @Override
     public List<Posts> findPostByUsername(String username) {
         return postRepository.findByUsername(username);
-    }
+    }*/
 
     @Override
     public Posts deletePost(Posts posts) {

@@ -1,6 +1,5 @@
-package com.sahelcrea.wechatback.models;
+package com.sahelcrea.wechatback.Models;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor // Génération d'un constructeur avec tous les paramètres
 @NoArgsConstructor // Génération d'un constructeur sans paramètre
 @Getter // Génération des Getters
 @Setter // Génération des Setters

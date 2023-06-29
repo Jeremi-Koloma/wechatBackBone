@@ -1,4 +1,4 @@
-package com.sahelcrea.wechatback.models;
+package com.sahelcrea.wechatback.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

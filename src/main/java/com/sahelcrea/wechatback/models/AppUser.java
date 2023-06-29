@@ -1,4 +1,4 @@
-package com.sahelcrea.wechatback.models;
+package com.sahelcrea.wechatback.Models;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -18,8 +18,8 @@ public class AppUser implements Serializable {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
 
     @Column (unique = true)
     private String username;
@@ -45,10 +45,10 @@ public class AppUser implements Serializable {
 
 
     // Constructeur avec tous les arguments
-    public AppUser(Long id, String firstName, String lastName, String username, String password, String email, Date createdDate, Set<UserRole> userRoles, List<Posts> posts, List<Posts> likedPost) {
+    public AppUser(Long id, String firstname, String lastname, String username, String password, String email, Date createdDate, Set<UserRole> userRoles, List<Posts> posts, List<Posts> likedPost) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -67,20 +67,20 @@ public class AppUser implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getUsername() {

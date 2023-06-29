@@ -1,7 +1,7 @@
-package com.sahelcrea.wechatback.services;
+package com.sahelcrea.wechatback.Services;
 
-import com.sahelcrea.wechatback.models.AppUser;
-import com.sahelcrea.wechatback.models.Posts;
+import com.sahelcrea.wechatback.Models.AppUser;
+import com.sahelcrea.wechatback.Models.Posts;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public interface PostService {
 
 
     // une méthode pour avoir la liste des post d'un utilisateur par son username
-    public List<Posts> findPostByUsername(String username);
+    //public List<Posts> findPostByUsername(String username);
 
 
     // une méthode pour supprimer un post
@@ -30,5 +30,4 @@ public interface PostService {
 
     // une méthode pour enregister la photo du post dans le serveur
     public String savePostImage(HttpServletRequest request, String fileName);
-
 }
