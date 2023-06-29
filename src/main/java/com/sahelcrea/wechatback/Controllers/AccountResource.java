@@ -2,9 +2,11 @@ package com.sahelcrea.wechatback.Controllers;
 
 import com.sahelcrea.wechatback.Models.AppUser;
 import com.sahelcrea.wechatback.Services.AccountService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +22,8 @@ public class AccountResource {
     @Autowired
     private AccountService accountService;
 
-
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // API Rest pour avoir la liste des utilisateurs
     @GetMapping("/list")
@@ -120,6 +123,47 @@ public class AccountResource {
         }catch (Exception e){
             return new ResponseEntity<>("photoNotSave", HttpStatus.EXPECTATION_FAILED);
         }
+    }
+
+
+    // API Rest pour changer son mots de passe
+    @PostMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody HashMap<String, String> request){
+        // vérifions l'utilisateur
+        String username = request.get("username");
+        AppUser appUser = accountService.findByUsername(username);
+        if (appUser == null){
+            return new ResponseEntity<>("UserNotFound", HttpStatus.NOT_FOUND);
+        }
+
+        String currentPassword = request.get("currentPassword");
+        String newPassword = request.get("newPassword");
+        String confirmPassword = request.get("confirmPassword");
+
+        // Vérifions si le nouveau mots de passe correspond au mots de passe confirmation ou pas
+        if (!newPassword.equals(confirmPassword)){
+            return new ResponseEntity<>("passwordNotConform", HttpStatus.BAD_REQUEST);
+        }
+
+        // Récupérons actuel mots de passe de l'utilisatur
+        String userPassword = appUser.getPassword();
+
+        // Maintenant essayons de changer le mots de passe
+        try {
+            if (newPassword != null && !newPassword.isEmpty() && !StringUtils.isEmpty(newPassword)){
+                // Vérifions si le mots de passe actuel correspond à celui dans la base de donnée
+                if (bCryptPasswordEncoder.matches(currentPassword, userPassword)){
+                    accountService.updateUserPassword(appUser, newPassword);
+                }else{
+                    return new ResponseEntity<>("incorrectCurrentPassword", HttpStatus.BAD_REQUEST);
+                }
+                return new ResponseEntity<>("PasswordChangedSuccefully", HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>("Une erreu s'est produit", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Success !", HttpStatus.OK);
     }
 
 }
